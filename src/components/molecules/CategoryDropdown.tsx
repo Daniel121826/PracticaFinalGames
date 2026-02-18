@@ -16,12 +16,12 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
                 Categorías
             </span>
 
-            {/* Lista de categorías */}
-            <ul className="absolute hidden group-hover:block bg-white text-black mt-2 rounded shadow-lg z-50 min-w-[150px]">
+            {/* Lista de categorías en grid de 2 columnas */}
+            <ul className="absolute hidden group-hover:grid grid-cols-2 gap-2 bg-white text-black mt-2 rounded shadow-lg z-50 min-w-[250px] p-2">
                 {categories.map((cat) => (
                     <li
                         key={cat}
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded"
                         onClick={() => onSelectCategory(cat)}
                     >
                         {cat}
@@ -33,4 +33,5 @@ const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
 };
 
 export default CategoryDropdown;
+
 

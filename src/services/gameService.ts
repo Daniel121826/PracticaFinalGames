@@ -22,8 +22,8 @@ export const gamesService = {
     return fetchFromAPI<Game[]>(`/games?category=${category}`);
   },
 
-  getGamesByPlatform: (platform: string): Promise<Game[]> => {
-    return fetchFromAPI<Game[]>(`/games?platform=${platform}`);
+  getGamesByPlataform: (plataform: string): Promise<Game[]> => {
+    return fetchFromAPI<Game[]>(`/games?platform=${plataform}`);
   },
 
   getGameById: (id: string): Promise<GameDetails> => {

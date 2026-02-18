@@ -1,12 +1,20 @@
 import React from "react";
 import CategoryDropdown from "../molecules/CategoryDropdown";
+import PlataformDropdown from "../molecules/PlataformDropdown";
 
 interface NavbarProps {
     categories: string[];
+    platforms: string[];
     onSelectCategory: (category: string) => void;
+    onSelectPlatform: (platform: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ categories, onSelectCategory }) => {
+const Navbar: React.FC<NavbarProps> = ({
+    categories,
+    platforms,
+    onSelectCategory,
+    onSelectPlatform,
+}) => {
     return (
         <nav className="flex items-center justify-between px-6 py-4 bg-gray-800 text-white">
             {/* Logo a la izquierda */}
@@ -15,14 +23,22 @@ const Navbar: React.FC<NavbarProps> = ({ categories, onSelectCategory }) => {
                 <span className="font-bold text-xl">Free2Play Explorer</span>
             </div>
 
-            {/* Dropdown categorías a la derecha */}
+            {/* Dropdowns a la derecha */}
             <div className="flex space-x-4 items-center">
-                <CategoryDropdown categories={categories} onSelectCategory={onSelectCategory} />
+                <CategoryDropdown
+                    categories={categories}
+                    onSelectCategory={onSelectCategory}
+                />
+                <PlataformDropdown
+                    plataform={platforms}
+                    onSelectPlataform={onSelectPlatform}
+                />
             </div>
         </nav>
     );
 };
 
 export default Navbar;
+
 
 
