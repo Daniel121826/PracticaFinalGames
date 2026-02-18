@@ -1,31 +1,65 @@
 import { useLoaderData } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Game } from "../types/game";
 import { Input } from "../components/atoms/InputSearch";
 import GameList from "../components/molecules/GameList";
-import "./Home.css"
+import Navbar from "../components/organisms/Navbar";
+import { gamesService } from "../services/gameService";
+import "./Home.css";
 
 const Home = () => {
   const games = (useLoaderData() as Game[]) || [];
+  const [gamesState, setGames] = useState<Game[]>(games);
+  const [categories, setCategories] = useState<string[]>([]);
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const filteredGames = games.filter(game =>
+  // Cargar categorías dinámicas al montar
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const allGames = await gamesService.getAllGames();
+        const uniqueGenres = Array.from(new Set(allGames.map(game => game.genre)));
+        setCategories(uniqueGenres.sort());
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Al seleccionar categoría
+  const handleSelectCategory = (category: string) => {
+    setSelectedCategory(category);
+    setGames(games.filter(game => game.genre === category));
+    setSearch("");
+  };
+
+
+  // Filtrar por búsqueda dentro de la categoría seleccionada
+  const filteredGames = gamesState.filter(game =>
     game.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div>
-      <h1>Lista de juegos</h1>
-      <p>Total: {filteredGames.length}</p>
+      <Navbar categories={categories} onSelectCategory={handleSelectCategory} />
 
-      <Input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-2">Lista de juegos</h1>
+        <p className="mb-4">Total: {filteredGames.length}</p>
 
-      <GameList games={filteredGames} />
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <GameList games={filteredGames} />
+      </div>
     </div>
   );
 };
 
 export default Home;
+
+

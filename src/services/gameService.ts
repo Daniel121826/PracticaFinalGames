@@ -1,5 +1,6 @@
 import type { Game, GameDetails } from "../types/game";
 
+
 const BASE_URL = "/api";
 
 async function fetchFromAPI<T>(endpoint: string): Promise<T> {
