@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=SN+Pro:wght@300;400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-main: "SN Pro", system-ui, sans-serif;
+
+  --color-dark-red: #792222;
+  --color-dark-blue: #394052;
+  --color-grey: #D8D8D8;
+  --color-dark-grey: #ACAAAA;
+  
+}
