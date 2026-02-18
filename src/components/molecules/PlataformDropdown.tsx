@@ -16,8 +16,7 @@ const PlataformDropdown: React.FC<PlataformDropdownProps> = ({
                 Plataformas
             </span>
 
-            {/* Lista de plataformas en grid de 2 columnas */}
-            <ul className="absolute hidden group-hover:grid bg-white text-black mt-2 rounded shadow-lg z-50 min-w-[250px] p-2">
+            <ul className="absolute left-0 top-full hidden group-hover:block bg-white text-black mt-2 rounded shadow-lg z-50 min-w-[150px] p-1">
                 {plataform.map((plat) => (
                     <li
                         key={plat}
@@ -28,6 +27,8 @@ const PlataformDropdown: React.FC<PlataformDropdownProps> = ({
                     </li>
                 ))}
             </ul>
+
+
         </div>
     );
 };
