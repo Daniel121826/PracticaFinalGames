@@ -5,71 +5,69 @@ import { Input } from "../components/atoms/InputSearch";
 import GameList from "../components/molecules/GameList";
 import Navbar from "../components/organisms/Navbar";
 import { gamesService } from "../services/gameService";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const games = (useLoaderData() as Game[]) || [];
-  const [gamesState, setGames] = useState<Game[]>(games);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [plataforms, setPlataforms] = useState<string[]>([]);
-  const [selectedPlataform, setSelectedPlataform] = useState<string>("");
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const initialCategory = params.get("category") || "";
   const initialPlatform = params.get("platform") || "";
 
-  // Cargar categorías dinámicas al montar
+  const games = (useLoaderData() as Game[]) || [];
+  const [gamesState, setGames] = useState<Game[]>(games);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [platforms, setPlatforms] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>(initialPlatform);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Cargar juegos, categorías y plataformas
   useEffect(() => {
     const fetchGames = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const allGames = await gamesService.getAllGames();
         setCategories(Array.from(new Set(allGames.map(g => g.genre))).sort());
-        setPlataforms(Array.from(new Set(allGames.map(g => g.platform))).sort());
+        setPlatforms(Array.from(new Set(allGames.map(g => g.platform))).sort());
 
-        // Aplicar filtros iniciales si vienen por URL
         let filtered = allGames;
 
         if (initialCategory) {
           filtered = filtered.filter(game => game.genre === initialCategory);
           setSelectedCategory(initialCategory);
         }
-
         if (initialPlatform) {
           filtered = filtered.filter(game => game.platform === initialPlatform);
-          setSelectedPlataform(initialPlatform);
+          setSelectedPlatform(initialPlatform);
         }
 
         setGames(filtered);
-      } catch (error) {
-        console.error("Error fetching games:", error);
+      } catch (err) {
+        setError("No se pudieron cargar los juegos. Intenta de nuevo.");
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchGames();
   }, [initialCategory, initialPlatform]);
 
-
-
-
-  // Al seleccionar categoría
-  // Al seleccionar categoría
+  // Funciones para seleccionar filtros
   const handleSelectCategory = (category: string) => {
     navigate(`/?category=${encodeURIComponent(category)}`);
   };
 
-  // Al seleccionar plataforma
-  const handleSelectPlataform = (platform: string) => {
+  const handleSelectPlatform = (platform: string) => {
     navigate(`/?platform=${encodeURIComponent(platform)}`);
   };
 
-
-  // Filtrar por búsqueda dentro de la categoría seleccionada
+  // Filtrado por búsqueda
   const filteredGames = gamesState.filter(game =>
     game.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -78,11 +76,10 @@ const Home = () => {
     <div>
       <Navbar
         categories={categories}
-        platforms={plataforms}
+        platforms={platforms}
         onSelectCategory={handleSelectCategory}
-        onSelectPlatform={handleSelectPlataform}
+        onSelectPlatform={handleSelectPlatform}
       />
-
 
       <div className="p-6">
         <Input
@@ -90,12 +87,24 @@ const Home = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <GameList games={filteredGames} />
+        {loading && (
+          <div className="flex justify-center items-center py-10">
+            <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+
+        {error && <p className="text-center text-red-500 py-4">{error}</p>}
+
+        {!loading && !error && (
+          <GameList games={filteredGames} />
+        )}
       </div>
     </div>
   );
 };
 
 export default Home;
+
+
 
 

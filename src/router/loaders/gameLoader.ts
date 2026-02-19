@@ -6,12 +6,10 @@ export const gamesLoader = async () => {
 
     console.log("Loader success:", games);
 
-    // 👇 Siempre devolver array válido
     return Array.isArray(games) ? games : [];
   } catch (error) {
     console.error("Loader error:", error);
 
-    // 👇 Nunca lanzar error
     return [];
   }
 };
