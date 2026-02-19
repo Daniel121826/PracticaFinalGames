@@ -12,15 +12,15 @@ const PlataformDropdown: React.FC<PlataformDropdownProps> = ({
     return (
         <div className="relative group">
             {/* Botón principal */}
-            <span className="cursor-pointer px-4 py-2 hover:text-yellow-400 font-semibold">
+            <span className="cursor-pointer px-4 py-2 hover:text-yellow-400 font-semibold text-xl">
                 Plataformas
             </span>
 
-            <ul className="absolute top-full right-0 hidden group-hover:block bg-white text-black mt-2 rounded shadow-lg z-50 min-w-[150px] p-1">
+            <ul className="absolute top-full right-0 hidden group-hover:block bg-red-500 text-white mt-2 rounded shadow-lg z-50 min-w-[150px] p-1">
                 {plataform.map((plat) => (
                     <li
                         key={plat}
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded"
+                        className="px-4 py-2 cursor-pointer rounded"
                         onClick={() => onSelectPlataform(plat)}
                     >
                         {plat}

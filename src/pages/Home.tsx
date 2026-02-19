@@ -5,9 +5,13 @@ import { Input } from "../components/atoms/InputSearch";
 import GameList from "../components/molecules/GameList";
 import Navbar from "../components/organisms/Navbar";
 import { gamesService } from "../services/gameService";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 import "./Home.css";
 
 const Home = () => {
+  const navigate = useNavigate();
   const games = (useLoaderData() as Game[]) || [];
   const [gamesState, setGames] = useState<Game[]>(games);
   const [categories, setCategories] = useState<string[]>([]);
@@ -15,47 +19,53 @@ const Home = () => {
   const [selectedPlataform, setSelectedPlataform] = useState<string>("");
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const initialCategory = params.get("category") || "";
+  const initialPlatform = params.get("platform") || "";
 
   // Cargar categorías dinámicas al montar
   useEffect(() => {
-    const fetchFilters = async () => {
+    const fetchGames = async () => {
       try {
-        // Traemos todos los juegos desde tu service
         const allGames = await gamesService.getAllGames();
+        setCategories(Array.from(new Set(allGames.map(g => g.genre))).sort());
+        setPlataforms(Array.from(new Set(allGames.map(g => g.platform))).sort());
 
-        // Guardamos todos los juegos en el estado principal
-        setGames(allGames);
+        // Aplicar filtros iniciales si vienen por URL
+        let filtered = allGames;
 
-        // Extraemos categorías únicas
-        const uniqueGenres = Array.from(new Set(allGames.map(game => game.genre)));
-        setCategories(uniqueGenres.sort());
+        if (initialCategory) {
+          filtered = filtered.filter(game => game.genre === initialCategory);
+          setSelectedCategory(initialCategory);
+        }
 
-        // Extraemos plataformas únicas
-        const uniquePlataforms = Array.from(new Set(allGames.map(game => game.platform)));
-        setPlataforms(uniquePlataforms.sort());
+        if (initialPlatform) {
+          filtered = filtered.filter(game => game.platform === initialPlatform);
+          setSelectedPlataform(initialPlatform);
+        }
 
+        setGames(filtered);
       } catch (error) {
-        console.error("Error fetching filters:", error);
+        console.error("Error fetching games:", error);
       }
     };
 
-    fetchFilters();
-  }, []);
+    fetchGames();
+  }, [initialCategory, initialPlatform]);
+
 
 
 
   // Al seleccionar categoría
+  // Al seleccionar categoría
   const handleSelectCategory = (category: string) => {
-    setSelectedCategory(category);
-    setGames(games.filter(game => game.genre === category));
-    setSearch("");
+    navigate(`/?category=${encodeURIComponent(category)}`);
   };
 
   // Al seleccionar plataforma
   const handleSelectPlataform = (platform: string) => {
-    setSelectedPlataform(platform);
-    setGames(games.filter(game => game.platform === platform));
-    setSearch("");
+    navigate(`/?platform=${encodeURIComponent(platform)}`);
   };
 
 
@@ -75,9 +85,6 @@ const Home = () => {
 
 
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-2">Lista de juegos</h1>
-        <p className="mb-4">Total: {filteredGames.length}</p>
-
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
