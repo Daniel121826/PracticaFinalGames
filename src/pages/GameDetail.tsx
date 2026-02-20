@@ -37,7 +37,7 @@ const GameDetail = () => {
     navigate(`/?platform=${encodeURIComponent(platform)}`);
   };
 
-  if (!game) return <p className="p-8 text-center text-xl">Juego no encontrado 😢</p>;
+  if (!game) return <p className="p-8 text-center text-xl">Juego no encontrado </p>;
 
   return (
     <div className="min-h-screen bg-dark-blue text-white">
@@ -79,7 +79,8 @@ const GameDetail = () => {
               <p><span className="font-bold">Desarrollador:</span>{" "}
                   <Link
                     to={`/developer/${encodeURIComponent(game.developer)}`}
-                    className=" hover:underline text-yellow-400">
+                    state={{ from: `/game/${game.id}` }} // enviamos de dónde venimos
+                    className="text-yellow-400 hover:underline">
                     {game.developer}
                   </Link>
               </p>
