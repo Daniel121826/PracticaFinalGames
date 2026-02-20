@@ -79,7 +79,7 @@ const GameDetail = () => {
               <p><span className="font-bold">Desarrollador:</span>{" "}
                   <Link
                     to={`/developer/${encodeURIComponent(game.developer)}`}
-                    state={{ from: `/game/${game.id}` }} // enviamos de dónde venimos
+                    state={{ from: `/game` }}
                     className="text-yellow-400 hover:underline">
                     {game.developer}
                   </Link>
