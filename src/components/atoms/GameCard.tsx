@@ -8,7 +8,7 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
   return (
-    <div className="bg-dark-blue rounded-xl">
+    <div className="bg-dark-blue rounded-xl mr-4 mb-4">
       <Link to={`/game/${game.id}`}>
       <img src={game.thumbnail} alt={game.title} className="rounded-t-xl w-full"/>
       <div className="p-5">

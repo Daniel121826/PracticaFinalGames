@@ -7,7 +7,7 @@ interface Props {
 
 const GameList = ({ games }: Props) => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center px-20">
     <div className="grid grid-cols-4 gap-4 ">
       {games.map(game => (
         <GameCard key={game.id} game={game} />
