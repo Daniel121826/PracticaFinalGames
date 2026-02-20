@@ -76,8 +76,14 @@ const GameDetail = () => {
               <p><span className="font-bold">Plataforma:</span> {game.platform}</p>
               <p><span className="font-bold">Género:</span> {game.genre}</p>
               <p><span className="font-bold">Fecha de lanzamiento:</span> {game.release_date}</p>
+              <p><span className="font-bold">Desarrollador:</span>{" "}
+                  <Link
+                    to={`/developer/${encodeURIComponent(game.developer)}`}
+                    className=" hover:underline text-yellow-400">
+                    {game.developer}
+                  </Link>
+              </p>
             </div>
-
             {/* Botón opcional de jugar o link externo */}
             {gameDetails.game_url && (
               <a
