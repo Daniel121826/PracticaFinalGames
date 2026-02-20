@@ -1,10 +1,11 @@
-import { useLoaderData, Link, useNavigate } from "react-router-dom"; 
+import { useLoaderData, useNavigate } from "react-router-dom"; 
 import type { Game } from "../types/game";
 import GameCard from "../components/atoms/GameCard"; // importa tu GameCard
 import Navbar from "../components/organisms/Navbar";// importa tu Navbar
 import "./Home.css"; // estilos específicos para esta página
 import { gamesService } from "../services/gameService";
 import { useEffect, useState } from "react";
+import "../components/atoms/GameCard.css"; // estilos para GameCard
 
 
 type DeveloperData = {
@@ -57,7 +58,7 @@ const Developer = () => {
         {/* Información del desarrollador */}
         <div className="mt-6">
           <h1 className="text-4xl font-bold">{developerName}</h1>
-          <p className="text-grey mt-2 max-w-2xl">{description}</p>
+          <p className="text-light-grey mt-2 max-w-2xl">{description}</p>
         </div>
 
         {/* Juegos del desarrollador */}
@@ -69,7 +70,7 @@ const Developer = () => {
           {games.length > 0 ? (
             games.map((game) => <GameCard key={game.id} game={game} />)
           ) : (
-            <p className="text-grey mt-4">
+            <p className="text-light-grey mt-4">
               No se encontraron juegos para este desarrollador
             </p>
           )}

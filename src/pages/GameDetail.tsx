@@ -40,7 +40,7 @@ const GameDetail = () => {
   if (!game) return <p className="p-8 text-center text-xl">Juego no encontrado </p>;
 
   return (
-    <div className="min-h-screen bg-dark-blue text-white">
+    <div className="min-h-screen bg-dark-grey text-white">
       {/* Navbar */}
       <Navbar
         categories={categories}
@@ -70,7 +70,7 @@ const GameDetail = () => {
           <div className="flex-1 flex flex-col gap-4">
             <h1 className="text-4xl font-bold">{game.title}</h1>
 
-            <p className="text-lg text-grey">{game.short_description}</p>
+            <p className="text-lg text-white">{game.short_description}</p>
 
             <div className="grid grid-cols-2 gap-4 mt-4 text-white/80">
               <p><span className="font-bold">Plataforma:</span> {game.platform}</p>
