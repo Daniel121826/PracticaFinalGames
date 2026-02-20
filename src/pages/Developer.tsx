@@ -65,7 +65,7 @@ const Developer = () => {
           Juegos de este desarrollador
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-25">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-20">
           {games.length > 0 ? (
             games.map((game) => <GameCard key={game.id} game={game} />)
           ) : (
