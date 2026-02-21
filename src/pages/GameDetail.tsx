@@ -49,15 +49,7 @@ const GameDetail = () => {
         onSelectPlatform={handleSelectPlatform}
       />
 
-      <div className="p-8">
-        {/* Botón de regresar */}
-        <Link
-          to="/"
-          className="inline-block mb-6 px-4 py-2 bg-pink rounded hover:bg-pink/80 transition"
-        >
-          ← Volver a la lista
-        </Link>
-
+      <div className="p-8 mt-7">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Imagen del juego */}
           <img
@@ -68,11 +60,11 @@ const GameDetail = () => {
 
           {/* Información del juego */}
           <div className="flex-1 flex flex-col gap-4">
-            <h1 className="text-4xl font-bold">{game.title}</h1>
+            <h1 className="text-6xl font-bold">{game.title}</h1>
 
-            <p className="text-lg text-white">{game.short_description}</p>
+            <p className="text-3xl text-white">{game.short_description}</p>
 
-            <div className="grid grid-cols-2 gap-4 mt-4 text-white/80">
+            <div className="grid grid-cols-2 gap-4 mt-4 text-white/80 text-xl">
               <p><span className="font-bold">Plataforma:</span> {game.platform}</p>
               <p><span className="font-bold">Género:</span> {game.genre}</p>
               <p><span className="font-bold">Fecha de lanzamiento:</span> {game.release_date}</p>
@@ -80,10 +72,11 @@ const GameDetail = () => {
                   <Link
                     to={`/developer/${encodeURIComponent(game.developer)}`}
                     state={{ from: `/game` }}
-                    className="text-yellow-400 hover:underline">
+                    className="text-yellow-400 underline">
                     {game.developer}
                   </Link>
               </p>
+              <p><span className="font-bold">Publisher: </span>{game.publisher}</p>
             </div>
             {/* Botón opcional de jugar o link externo */}
             {gameDetails.game_url && (
@@ -91,7 +84,7 @@ const GameDetail = () => {
                 href={gameDetails.game_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 px-6 py-3 bg-green rounded hover:bg-green/80 text-center w-max transition"
+                className="mt-6 py-3 bg-green rounded text-center w-max transition text-2xl text-yellow-400 underline"
               >
                 Ir al juego
               </a>

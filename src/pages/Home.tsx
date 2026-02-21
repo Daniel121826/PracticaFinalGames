@@ -81,11 +81,16 @@ const Home = () => {
         onSelectPlatform={handleSelectPlatform}
       />
 
-      <div className="p-6">
+      <div className="p-6 pr-30 justify-end text-white bg-dark-grey flex items-center gap-10">
+        <h2 className="text-6xl font-bold">Buscas un juego gratis?</h2>
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          
         />
+      </div>
+
+      <div className="p-6">
 
         {loading && (
           <div className="flex justify-center items-center py-10">
