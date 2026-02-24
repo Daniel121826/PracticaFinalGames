@@ -11,7 +11,6 @@ const PlataformDropdown: React.FC<PlataformDropdownProps> = ({
 }) => {
     return (
         <div className="relative group">
-            {/* Botón principal */}
             <span className="cursor-pointer px-4 py-2 hover:text-yellow-400 font-semibold text-xl">
                 Plataformas
             </span>

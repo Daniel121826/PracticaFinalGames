@@ -5,15 +5,8 @@ import GameDetail from "../pages/GameDetail";
 import { gameDetailsLoader } from "./loaders/gameDetailLoader";
 import { developerLoader } from "./loaders/developerLoader";
 import Developer from "../pages/Developer";
+import ErrorPage from "../pages/ErrorPage";
 
-const ErrorPage = () => {
-  return (
-    <div>
-      <h1>Error</h1>
-      <p>No se pudieron cargar los datos</p>
-    </div>
-  );
-};
 
 export const router = createBrowserRouter([
   {
@@ -29,9 +22,9 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-  path: "/developer/:developerName",
-  element: <Developer />,
-  loader: developerLoader,
-  errorElement: <ErrorPage />
-}
+    path: "/developer/:developerName",
+    element: <Developer />,
+    loader: developerLoader,
+    errorElement: <ErrorPage />
+  }
 ]);
