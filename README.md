@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# 🎮 Free Games Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Objetivos
 
-Currently, two official plugins are available:
+El objetivo de este proyecto es desarrollar una **Aplicación de Página Única (SPA)** utilizando **React, TypeScript y React Router**, capaz de consumir datos desde una API externa mediante peticiones AJAX.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+La aplicación permite explorar videojuegos gratuitos, filtrarlos por categoría y plataforma, consultar detalles individuales y visualizar información sobre desarrolladores.
 
-## React Compiler
+Este proyecto demuestra conocimientos en:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Arquitectura modular en React
+- Uso avanzado de React Router (loaders, rutas dinámicas y manejo de errores)
+- Integración con API externa
+- Manejo de estado y filtrado de datos
+- Organización de componentes siguiendo Atomic Design
 
-## Expanding the ESLint configuration
+# 🚀 Características
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+✅ Listado completo de videojuegos  
+✅ Búsqueda por nombre  
+✅ Filtro por categoría  
+✅ Filtro por plataforma  
+✅ Ruta dinámica para detalle del juego (`/game/:id`)  
+✅ Ruta dinámica para desarrollador (`/developer/:developerName`)  
+✅ Manejo de errores con página personalizada  
+✅ Loader de datos con React Router  
+✅ Diseño responsive  
+✅ Arquitectura basada en Atomic Design  
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# 🧩 Organización de Componentes
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🔹 Componentes Atómicos
+- InputSearch
+- GameCard
+- Botones y elementos básicos
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🔹 Componentes Moleculares
+- GameList (conjunto de GameCard)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔹 Componentes Organismo
+- Navbar (categorías + plataformas)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔹 Componentes de Página
+- Home
+- GameDetail
+- Developer
+- ErrorPage
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# 🌐 Rutas Implementadas
+
+| Ruta | Descripción |
+|------|------------|
+| `/` | Página principal con listado y filtros |
+| `/game/:id` | Detalle del videojuego |
+| `/developer/:developerName` | Juegos del desarrollador |
+| Error automático | Página personalizada para errores 404 y 500 |
+
+# 🔌 Integración de API
+
+La aplicación consume datos mediante el servicio:
+services/gameService.ts
+
+## Endpoints utilizados:
+
+- Obtener todos los juegos
+- Obtener juego por ID
+- Filtrado por desarrollador (lógica local)
+- Filtrado por categoría y plataforma (mediante query params)
+
+Se utilizan **loaders de React Router** para cargar datos antes de renderizar cada página.
+
+---
+
+# ⚠️ Manejo de Errores
+
+Se implementó una página de error personalizada (`ErrorPage.tsx`) que:
+
+- Muestra código de error (404 / 500)
+- Muestra mensaje personalizado
+- Permite volver al inicio
+
+
+
